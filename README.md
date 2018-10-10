@@ -1,2 +1,2 @@
 # liri-node-app
-Use node with API packages 
+Use Node with API packages.
