@@ -8,4 +8,8 @@ exports.spotify = {
 
 exports.bandsInTown = {
     secret: process.env.BANDSINTOWN_SECRET
-}
+};
+
+exports.OMDB = {
+    secret: process.env.OMDB_SECRET
+};
