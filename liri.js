@@ -60,7 +60,12 @@ if (!(liriCommand == null)) {
                     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
                     // console.log('body:', body); // Print the output from the BandsInTown API.
                     let bandBody = JSON.parse(body);
-                    console.log(bandBody);
+                    console.log("\n Band Name: U2");
+                    bandBody.forEach(element => {
+                        console.log("Venue name: ", element.venue.name);
+                        console.log("Location: ", element.venue.city + ", " + element.venue.country);
+                        console.log("Date: ", moment(element.datetime).format("MM/DD/YYYY") + "\n");
+                    });
                 });
             } else {
                 let liriArtistURL = "https://rest.bandsintown.com/artists/";
@@ -71,11 +76,30 @@ if (!(liriCommand == null)) {
                 request(liriArtistURL, function (error, response, body) {
                     console.log('error:', error); // Print the error if one occurred
                     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-                    // console.log('body:', body); // Print the output from the BandsInTown API.
+                    // console.log('body: \n', body); // Print the output from the BandsInTown API.
                     let bandBody = JSON.parse(body);
-                    console.log(bandBody[0]);
+                    // let bandBody = JSON.parse(JSON.stringify(body));
+                    console.log("concert body: \n", bandBody);
+                    // console.log("Venue name", bandBody[0].venue.name);
+                    // console.log("Location: ", bandBody[0].venue.city + "' " + bandBody[0].venue.country);
+                    // console.log("typeof bandBody: ", typeof bandBody);
+
+                    console.log("\n Band Name: ", liriParm1);
+                    bandBody.forEach(element => {
+                        console.log("Venue name: ", element.venue.name);
+                        console.log("Location: ", element.venue.city + ", " + element.venue.country);
+                        console.log("Date: ", moment(element.datetime).format("MM/DD/YYYY") + "\n");
+                    });
+                    
                 });
+                
             }
+
+        //  * Name of the venue
+        //  * Venue location
+        //  * Date of the Event (use moment to format this as "MM/DD/YYYY")
+
+
             break;
         case 'spotify-this-song':
             console.log("76====================keys.spotity: ", keys.spotify);
@@ -84,8 +108,8 @@ if (!(liriCommand == null)) {
             console.log("79 spotify: ", spotify );
             console.log("80 spotify id: ", spotify.credentials.id);
             console.log("spotify secret: ", spotify.credentials.secret);
-
-            if(liriParm1 !== null) {
+            console.log("liriParm1: ", liriParm1);
+            if((liriParm1 !== null) && (liriParm1 !== undefined)) {
                 liriParm1 = liriParm1.trim(); 
                 spotify
                     .search({ type: 'track', query: liriParm1 })
@@ -103,17 +127,10 @@ if (!(liriCommand == null)) {
                     });
                 
                 
-                // spotify.search({ type: 'track', query: liriParm1 }, function(err, data) {
-                //     if (err) {
-                //     return console.log('Error occurred: ' + err);
-                //     }
-                //     console.log("spotify data =====+++++++++=========", data);
-                //     let spotifyData = JSON.parse(data);
-                //     console.log("spotifyData: ", spotifyData);  
-                // });
+                
             } else {
                 spotify
-                    .search({ type: 'track', query: 'I Want it That Way' })
+                    .search({ type: 'track', query: 'The Sign' })
                     .then(function(response) {
                         // console.log("response: >>>>>>>>>>", response);
                         console.log("response.tracks.items[0]=====", response.tracks.items[0]);
