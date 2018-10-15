@@ -62,8 +62,11 @@ if (!(liriCommand == null)) {
                     let bandBody = JSON.parse(body);
                     console.log("\n Band Name: U2");
                     bandBody.forEach(element => {
+                        //  * Name of the venue
                         console.log("Venue name: ", element.venue.name);
+                        //  * Venue location
                         console.log("Location: ", element.venue.city + ", " + element.venue.country);
+                        //  * Date of the Event (use moment to format this as "MM/DD/YYYY")
                         console.log("Date: ", moment(element.datetime).format("MM/DD/YYYY") + "\n");
                     });
                 });
@@ -86,8 +89,11 @@ if (!(liriCommand == null)) {
 
                     console.log("\n Band Name: ", liriParm1);
                     bandBody.forEach(element => {
+                        //  * Name of the venue
                         console.log("Venue name: ", element.venue.name);
+                        //  * Venue location
                         console.log("Location: ", element.venue.city + ", " + element.venue.country);
+                        //  * Date of the Event (use moment to format this as "MM/DD/YYYY")
                         console.log("Date: ", moment(element.datetime).format("MM/DD/YYYY") + "\n");
                     });
                     
@@ -95,14 +101,14 @@ if (!(liriCommand == null)) {
                 
             }
 
-        //  * Name of the venue
-        //  * Venue location
-        //  * Date of the Event (use moment to format this as "MM/DD/YYYY")
 
 
             break;
+// =======================================================
+//          Spotify-This-Song
+// =======================================================
         case 'spotify-this-song':
-            console.log("76====================keys.spotity: ", keys.spotify);
+            console.log("76====================keys.spotify: ", keys.spotify);
             var spotify = new Spotify(keys.spotify);
             
             console.log("79 spotify: ", spotify );
@@ -117,27 +123,52 @@ if (!(liriCommand == null)) {
                         // console.log("response: >>>>>>>>>>", response);
                         // console.log("response.tracks.items[0]=====", response.tracks.items[0]);
                         // console.log("90 Spotify Artist's Name: ", response.tracks.items[0].artists.name);
-                        let theTrack = JSON.parse(JSON.stringify(response.tracks.items[0]));
-                        console.log("theTrack: ", theTrack);
-                        console.log("album name: \n", theTrack.album.name);
-                        console.log("artist Name: \n", theTrack.artists[0].name);
+                        // let theTrack = JSON.parse(JSON.stringify(response.tracks.items[0]));
+                        // console.log("theTrack: ", theTrack);
+                        // console.log("\nArtist Name: ", theTrack.artists[0].name);
+                        // console.log("Song Title: ", theTrack.name);
+                        // console.log("Song preview link: ", theTrack.preview_url);
+                        // console.log("Spotify album Link: ", theTrack.external_urls.spotify);
+                        // console.log("Album name: ", theTrack.album.name);
+                        
+                        let arrTrack = JSON.parse(JSON.stringify(response.tracks.items));
+                        console.log("\n=======================================================================")
+                        arrTrack.forEach(element => {
+                            // console.log("\n Track element: ", element);
+                            console.log("\nArtist Name: ", element.artists[0].name);
+                            console.log("Song Title: ", element.name);
+                            console.log("Song preview link: ", element.preview_url);
+                            console.log("Spotify album Link: ", element.external_urls.spotify);
+                            console.log("Album name: ", element.album.name);
+                            console.log("\n---------------------------------------")
+                        });
                     })
                     .catch(function(err) {
                         console.log(err);
                     });
                 
-                
+                    // * Artist(s)
+                    // * The song's name
+                    // * A preview link of the song from Spotify
+                    // * The album that the song is from
                 
             } else {
                 spotify
                     .search({ type: 'track', query: 'The Sign' })
                     .then(function(response) {
                         // console.log("response: >>>>>>>>>>", response);
-                        console.log("response.tracks.items[0]=====", response.tracks.items[0]);
-                        let theTrack = JSON.parse(JSON.stringify(response.tracks.items[0]));
-                        console.log("theTrack: ", theTrack);
-                        console.log("album name: \n", theTrack.album.name);
-                        console.log("artist Name: \n", theTrack.artists[0].name);
+                        // console.log("response.tracks.items[0]=====", response.tracks.items[0]);
+                        let arrTrack = JSON.parse(JSON.stringify(response.tracks.items));
+                        console.log("\n=======================================================================")
+                        arrTrack.forEach(element => {
+                            // console.log("\n Track element: ", element);
+                            console.log("\nArtist Name: ", element.artists[0].name);
+                            console.log("Song Title: ", element.name);
+                            console.log("Song preview link: ", element.preview_url);
+                            console.log("Spotify album Link: ", element.external_urls.spotify);
+                            console.log("Album name: ", element.album.name);
+                            console.log("\n---------------------------------------")
+                        });
                     })
                     .catch(function(err) {
                         console.log(err);
@@ -147,9 +178,19 @@ if (!(liriCommand == null)) {
             }
         
             break;
+        // =======================================================
+        //          movie-this
+        // =======================================================
         case 'movie-this':
+            console.log("==============  Movie-This  =======================")
+            
             let omdbURL = "http://www.omdbapi.com/?t=";
-            omdbURL += liriParm1;
+            // let omdbURL = "http://www.omdbapi.com/?type=movie&s=";
+            if((liriParm1 !== null) && (liriParm1 !== undefined)) {
+                omdbURL += liriParm1;
+            } else {
+                omdbURL += 'Mr. Nobody';
+            }
             omdbURL += '&apikey=';
             omdbURL += myOMDB.secret;
             // omdbURL += "&";
@@ -157,9 +198,36 @@ if (!(liriCommand == null)) {
             request(omdbURL, function (error, response, body) {
                 console.log('error:', error); // Print the error if one occurred
                 console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-                // console.log('body:', body); // Print the output from the BandsInTown API.
-                console.log("myBody:  ===== : ", body);
-                console.log(JSON.parse(body));
+                
+                // console.log("myBody:  ===== : \n", body);
+                // console.log(JSON.parse(body));
+                let myMovie = JSON.parse(body);
+                    console.log("================================================\n")
+                    console.log("Movie Title: ", myMovie.Title);
+                    console.log("Year of release: ", myMovie.Year);
+                    console.log("IMDB Rating: ", myMovie.imdbRating);
+                    // console.log("IMDB Rating 2: ", myMovie.Ratings);
+                    // console.log("keys: ", Object.keys(myMovie.Ratings));
+                    // console.log("entries: ", Object.entries(myMovie.Ratings));
+                    // myMovie.Ratings.forEach(movie => {
+                    //     if (movie.Source === "Rotten Tomatoes") {
+                    //         console.log("Rotten Tomatoes Rating", movie.Value);
+                    //     }
+                    // });
+                    console.log("Rotten Tomatoes Rating", myMovie.Ratings.find(source => source.Source === "Rotten Tomatoes").Value);
+                    console.log("Country of origin: ", myMovie.Country);
+                    console.log("Language: ", myMovie.Language);
+                    console.log("Movie plot: ", myMovie.Plot);
+                    console.log("Actors: ", myMovie.Actors + "\n");
+                    // * Title of the movie.
+                    // * Year the movie came out.
+                    // * IMDB Rating of the movie.
+                    // * Rotten Tomatoes Rating of the movie.
+                    // * Country where the movie was produced.
+                    // * Language of the movie.
+                    // * Plot of the movie.
+                    // * Actors in the movie.
+                
                 // let OMDBBody = JSON.stringify(body, null, 2);
                 // console.log("Movie-This body: ", OMDBBody);
             });
@@ -190,33 +258,32 @@ if (!(liriCommand == null)) {
             
                 console.log("dataArr[1]: =====", dataArr[1]);
                 
+                // ************************************************************************ //
+                // Spotiy again                                                             //
+                // ************************************************************************ //
                 var spotify = new Spotify(keys.spotify);
                 spotify.search({ type: 'track', query: dataArr[1] })
                     .then(function(response) {
                         // console.log("response: >>>>>>>>>>", response);
                         console.log("response.tracks.items[0]=====", response.tracks.items[0]);
                         // let theTrack = JSON.stringify(response.tracks.items[0]);
-                        let theTrack = JSON.parse(JSON.stringify(response.tracks.items[0]));
-                        console.log("theTrack: ", theTrack);
-                        console.log("album name: \n", theTrack.album.name);
-                        console.log("artist Name: \n", theTrack.artists[0].name);
+                        let arrTrack = JSON.parse(JSON.stringify(response.tracks.items));
+                        console.log("\n=======================================================================")
+                        arrTrack.forEach(element => {
+                            // console.log("\n Track element: ", element);
+                            console.log("\nArtist Name: ", element.artists[0].name);
+                            console.log("Song Title: ", element.name);
+                            console.log("Song preview link: ", element.preview_url);
+                            console.log("Spotify album Link: ", element.external_urls.spotify);
+                            console.log("Album name: ", element.album.name);
+                            console.log("\n---------------------------------------")
+                        });
                     })
                     .catch(function(err) {
                         console.log("spotify err: ======++++++++: ", err);
                     });
 
-                
-                
             });
-            // var spotify = new Spotify(keys.spotify);
-            // spotify.search({ type: 'track', query: "2112" })
-            //     .then(function(response) {
-            //         // console.log("response: >>>>>>>>>>", response);
-            //         console.log("response.tracks.items[0]=====", response.tracks.items[0]);
-            //     })
-            //     .catch(function(err) {
-            //         console.log("spotify err: ======++++++++: ", err);
-            //     });
 
 
             break;
