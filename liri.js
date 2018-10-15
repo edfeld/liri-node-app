@@ -41,65 +41,53 @@ var Spotify = require('node-spotify-api');
 require("dotenv").config();
 
 var keys = require("./keys.js");
-console.log("keys:  ------ ", keys);
+// console.log("keys:  ------ ", keys);
 
 var bandsInTown = keys.bandsInTown;
-console.log("bandsInTown: ", bandsInTown);
-console.log("======keys.OMDB.secrets: ", keys.OMDB.secret);
+// console.log("bandsInTown: ", bandsInTown);
+// console.log("======keys.OMDB.secrets: ", keys.OMDB.secret);
 var myOMDB = keys.OMDB;
-console.log("OMDB Keys secret1: ", myOMDB.secret);
+// console.log("OMDB Keys secret1: ", myOMDB.secret);
 
 console.log("47 liricommand: ", liriCommand);
 if (!(liriCommand == null)) {
     switch (liriCommand) {
         case 'concert-this':
-            console.log("concert-this"); 
-            if (liriParm1 == null) {
-                request('https://rest.bandsintown.com/artists/u2/events?app_id=' + bandsInTown.secret, function (error, response, body) {
-                    console.log('error:', error); // Print the error if one occurred
-                    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-                    // console.log('body:', body); // Print the output from the BandsInTown API.
-                    let bandBody = JSON.parse(body);
-                    console.log("\n Band Name: U2");
-                    bandBody.forEach(element => {
-                        //  * Name of the venue
-                        console.log("Venue name: ", element.venue.name);
-                        //  * Venue location
-                        console.log("Location: ", element.venue.city + ", " + element.venue.country);
-                        //  * Date of the Event (use moment to format this as "MM/DD/YYYY")
-                        console.log("Date: ", moment(element.datetime).format("MM/DD/YYYY") + "\n");
-                    });
-                });
-            } else {
-                let liriArtistURL = "https://rest.bandsintown.com/artists/";
-                liriArtistURL += liriParm1;
-                liriArtistURL += '/events?app_id='
-                liriArtistURL += bandsInTown.secret;
-                console.log("==========++++++++++ liriArtistURL: ", liriArtistURL);
-                request(liriArtistURL, function (error, response, body) {
-                    console.log('error:', error); // Print the error if one occurred
-                    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-                    // console.log('body: \n', body); // Print the output from the BandsInTown API.
-                    let bandBody = JSON.parse(body);
-                    // let bandBody = JSON.parse(JSON.stringify(body));
-                    console.log("concert body: \n", bandBody);
-                    // console.log("Venue name", bandBody[0].venue.name);
-                    // console.log("Location: ", bandBody[0].venue.city + "' " + bandBody[0].venue.country);
-                    // console.log("typeof bandBody: ", typeof bandBody);
-
-                    console.log("\n Band Name: ", liriParm1);
-                    bandBody.forEach(element => {
-                        //  * Name of the venue
-                        console.log("Venue name: ", element.venue.name);
-                        //  * Venue location
-                        console.log("Location: ", element.venue.city + ", " + element.venue.country);
-                        //  * Date of the Event (use moment to format this as "MM/DD/YYYY")
-                        console.log("Date: ", moment(element.datetime).format("MM/DD/YYYY") + "\n");
-                    });
-                    
+            console.log("============================= concert-this ========================================="); 
+            if ((liriParm1 == null) || (liriParm1 == undefined)) {
+                liriParm1 = 'U2';
+            } 
+            
+            let liriArtistURL = "https://rest.bandsintown.com/artists/";
+            liriArtistURL += liriParm1;
+            liriArtistURL += '/events?app_id='
+            liriArtistURL += bandsInTown.secret;
+            // console.log("==========++++++++++ liriArtistURL: ", liriArtistURL);
+            request(liriArtistURL, function (error, response, body) {
+                console.log('error:', error); // Print the error if one occurred
+                console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+                // console.log('body: \n', body); // Print the output from the BandsInTown API.
+                let bandBody = JSON.parse(body);
+                // let bandBody = JSON.parse(JSON.stringify(body));
+                // console.log("concert body: \n", bandBody);
+                // console.log("Venue name", bandBody[0].venue.name);
+                // console.log("Location: ", bandBody[0].venue.city + "' " + bandBody[0].venue.country);
+                // console.log("typeof bandBody: ", typeof bandBody);
+                console.log("\n=======================================================================")
+                console.log("\n Band Name: ", liriParm1);
+                console.log("item count: ", bandBody.length);
+                bandBody.forEach(element => {
+                    //  * Name of the venue
+                    console.log("Venue name: ", element.venue.name);
+                    //  * Venue location
+                    console.log("Location: ", element.venue.city + ", " + element.venue.country);
+                    //  * Date of the Event (use moment to format this as "MM/DD/YYYY")
+                    console.log("Date: ", moment(element.datetime).format("MM/DD/YYYY") + "\n");
                 });
                 
-            }
+            });
+                
+            // }
 
 
 
@@ -108,14 +96,20 @@ if (!(liriCommand == null)) {
 //          Spotify-This-Song
 // =======================================================
         case 'spotify-this-song':
-            console.log("76====================keys.spotify: ", keys.spotify);
+        console.log("============================= spotify-this-song =========================================");
+            let itemCount = 0;
+            // console.log("76====================keys.spotify: ", keys.spotify);
             var spotify = new Spotify(keys.spotify);
             
-            console.log("79 spotify: ", spotify );
-            console.log("80 spotify id: ", spotify.credentials.id);
-            console.log("spotify secret: ", spotify.credentials.secret);
+            // console.log("79 spotify: ", spotify );
+            // console.log("80 spotify id: ", spotify.credentials.id);
+            // console.log("spotify secret: ", spotify.credentials.secret);
             console.log("liriParm1: ", liriParm1);
             if((liriParm1 !== null) && (liriParm1 !== undefined)) {
+                // Nothing
+            } else {
+                liriParm1 = 'The Sign';
+            }
                 liriParm1 = liriParm1.trim(); 
                 spotify
                     .search({ type: 'track', query: liriParm1 })
@@ -125,6 +119,7 @@ if (!(liriCommand == null)) {
                         // console.log("90 Spotify Artist's Name: ", response.tracks.items[0].artists.name);
                         // let theTrack = JSON.parse(JSON.stringify(response.tracks.items[0]));
                         // console.log("theTrack: ", theTrack);
+                        
                         // console.log("\nArtist Name: ", theTrack.artists[0].name);
                         // console.log("Song Title: ", theTrack.name);
                         // console.log("Song preview link: ", theTrack.preview_url);
@@ -132,6 +127,7 @@ if (!(liriCommand == null)) {
                         // console.log("Album name: ", theTrack.album.name);
                         
                         let arrTrack = JSON.parse(JSON.stringify(response.tracks.items));
+                        console.log("theTrack.length: ", arrTrack.length);
                         console.log("\n=======================================================================")
                         arrTrack.forEach(element => {
                             // console.log("\n Track element: ", element);
@@ -151,38 +147,14 @@ if (!(liriCommand == null)) {
                     // * The song's name
                     // * A preview link of the song from Spotify
                     // * The album that the song is from
-                
-            } else {
-                spotify
-                    .search({ type: 'track', query: 'The Sign' })
-                    .then(function(response) {
-                        // console.log("response: >>>>>>>>>>", response);
-                        // console.log("response.tracks.items[0]=====", response.tracks.items[0]);
-                        let arrTrack = JSON.parse(JSON.stringify(response.tracks.items));
-                        console.log("\n=======================================================================")
-                        arrTrack.forEach(element => {
-                            // console.log("\n Track element: ", element);
-                            console.log("\nArtist Name: ", element.artists[0].name);
-                            console.log("Song Title: ", element.name);
-                            console.log("Song preview link: ", element.preview_url);
-                            console.log("Spotify album Link: ", element.external_urls.spotify);
-                            console.log("Album name: ", element.album.name);
-                            console.log("\n---------------------------------------")
-                        });
-                    })
-                    .catch(function(err) {
-                        console.log(err);
-                });
-
-
-            }
-        
+            
+            
             break;
         // =======================================================
         //          movie-this
         // =======================================================
         case 'movie-this':
-            console.log("==============  Movie-This  =======================")
+            console.log("========================  Movie-This  ============================");
             
             let omdbURL = "http://www.omdbapi.com/?t=";
             // let omdbURL = "http://www.omdbapi.com/?type=movie&s=";
@@ -194,7 +166,7 @@ if (!(liriCommand == null)) {
             omdbURL += '&apikey=';
             omdbURL += myOMDB.secret;
             // omdbURL += "&";
-            console.log("==========++++++++++ OMDBMovieURL: ", omdbURL);
+            // console.log("==========++++++++++ OMDBMovieURL: ", omdbURL);
             request(omdbURL, function (error, response, body) {
                 console.log('error:', error); // Print the error if one occurred
                 console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
@@ -235,7 +207,7 @@ if (!(liriCommand == null)) {
         
             break;
         case 'do-what-it-says':
-            console.log("144 Do What it says - start");
+        console.log("========================  do-what-it-says  ============================")
             // // This block of code will read from the "random.txt" file.
             // // It's important to include the "utf8" parameter or the code will provide stream data (garbage)
             // // The code will store the contents of the reading inside the variable "data"
