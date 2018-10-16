@@ -65,6 +65,6 @@ LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and R
 5. do-what-it-says
   When a user calls the liri.js program in node with the parameter, "do-what-it-says", the program run the Spotify lookup with the song named, "I Want it That Way".  This branch uses the `fs` node package to read a separate file called random.txt and use the text in that file to run the Spotify lookup.
 
-Link to my demonstration video:
+Here is the link to my demonstration video:
 
 ```https://drive.google.com/file/d/14SyWYbQsCtQhlzna7IjofDb9RDtAX1tN/view```
