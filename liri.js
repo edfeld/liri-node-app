@@ -53,7 +53,7 @@ var bandsInTown = keys.bandsInTown;
 var myOMDB = keys.OMDB;
 // console.log("OMDB Keys secret1: ", myOMDB.secret);
 
-function SpotifyThisSong( searchStr ) {
+function SpotifyThisSong(searchStr) {
 
     console.log("============================= spotify-this-song =========================================");
         let itemCount = 0;
@@ -87,7 +87,8 @@ function SpotifyThisSong( searchStr ) {
                 
                 let arrTrack = JSON.parse(JSON.stringify(response.tracks.items));
                 console.log("theTrack.length: ", arrTrack.length);
-                console.log("\n=======================================================================")
+                console.log("\n=======================================================================\n");
+                console.log("   Song Name: ", searchStr);
                 arrTrack.forEach(element => {
                     // console.log("\n Track element: ", element);
                     console.log("\nArtist Name: ", element.artists[0].name);
@@ -109,14 +110,14 @@ function SpotifyThisSong( searchStr ) {
    
 }
 
-function concertThis() {
+function concertThis(searchStr) {
     console.log("============================= concert-this ========================================="); 
-    if ((liriParm1 == null) || (liriParm1 == undefined)) {
-        liriParm1 = 'U2';
+    if ((searchStr == null) || (searchStr == undefined)) {
+        searchStr = 'U2';
     } 
     
     let liriArtistURL = "https://rest.bandsintown.com/artists/";
-    liriArtistURL += liriParm1;
+    liriArtistURL += searchStr;
     liriArtistURL += '/events?app_id='
     liriArtistURL += bandsInTown.secret;
     // console.log("==========++++++++++ liriArtistURL: ", liriArtistURL);
@@ -124,7 +125,7 @@ function concertThis() {
         console.log('error:', error); // Print the error if one occurred
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
         // console.log('body: \n', body); // Print the output from the BandsInTown API.
-        console.log("body", body);
+        // console.log("body", body);
         if (body === "")
             console("empty Body");
         
@@ -134,8 +135,8 @@ function concertThis() {
         // console.log("Venue name", bandBody[0].venue.name);
         // console.log("Location: ", bandBody[0].venue.city + "' " + bandBody[0].venue.country);
         // console.log("typeof bandBody: ", typeof bandBody);
-        console.log("\n=======================================================================")
-        console.log("\n Band Name: ", liriParm1);
+        console.log("\n===================== Concert-This =========================================")
+        console.log("\n Band Name: ", searchStr);
         console.log("item count: ", bandBody.length);
         bandBody.forEach(element => {
             //  * Name of the venue
@@ -149,13 +150,14 @@ function concertThis() {
     });
 }
 
-function movieThis() {
+function movieThis(searchStr) {
     console.log("========================  Movie-This  ============================");
             
     let omdbURL = "http://www.omdbapi.com/?t=";
     // let omdbURL = "http://www.omdbapi.com/?type=movie&s=";
-    if((liriParm1 !== null) && (liriParm1 !== undefined)) {
-        omdbURL += liriParm1;
+    console.log("searchStr: ", searchStr)
+    if((searchStr !== null) && (searchStr !== undefined)) {
+        omdbURL += searchStr;
     } else {
         omdbURL += 'Mr. Nobody';
     }
@@ -170,7 +172,7 @@ function movieThis() {
         // console.log("myBody:  ===== : \n", body);
         // console.log(JSON.parse(body));
         let myMovie = JSON.parse(body);
-            console.log("================================================\n")
+            console.log("==================== Movie-This ============================\n")
             console.log("Movie Title: ", myMovie.Title);
             console.log("Year of release: ", myMovie.Year);
             console.log("IMDB Rating: ", myMovie.imdbRating);
@@ -218,7 +220,7 @@ if (!(liriCommand == null)) {
         //          concert-this
         // =======================================================
         case 'concert-this':
-            concertThis();
+            concertThis(liriParm1);
 
             break;
         // =======================================================
@@ -232,7 +234,7 @@ if (!(liriCommand == null)) {
         //          movie-this
         // =======================================================
         case 'movie-this':
-            movieThis();
+            movieThis(liriParm1);
     
         
             break;
@@ -251,19 +253,53 @@ if (!(liriCommand == null)) {
             
                 // We will then print the contents of data
                 console.log("fs.readFile data: ", data);
-            
+                var arrFile = data.split('\n')
+                console.log("arrFile: ", arrFile);
                 // Then split it by commas (to make it more readable)
-                var dataArr = data.split(",");
+                arrFile.forEach(element => {
+                    
+                    const dataArr = element.split(",");
+                    // We will then re-display the content as an array for later use.
+                    console.log("dataArr from Random.txt: ", dataArr);
+                    let parm = dataArr[1];
+                    // console.log("dataArr[1]: =====", dataArr[1]);
+                    if ((dataArr[0] !== null) && (dataArr[1] !== null)) {
+                        switch (dataArr[0]) {
+                            // =======================================================
+                            //          concert-this
+                            // =======================================================
+                            case 'concert-this':
+                                // console.log("dataArray ", dataArr);
+                                // console.log("dataArr[1] ",dataArr[1]);
+                                concertThis(dataArr[1]);``
+                    
+                                break;
+                            // =======================================================
+                            //          Spotify-This-Song
+                            // =======================================================
+                            case 'spotify-this-song':
+                                SpotifyThisSong(dataArr[1]);
+                    
+                                break;
+                            // =======================================================
+                            //          movie-this
+                            // =======================================================
+                            case 'movie-this':
+                                movieThis(dataArr[1]);
+
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                });
             
-                // We will then re-display the content as an array for later use.
-                console.log("dataArr from Random.txt: ", dataArr);
-            
-                console.log("dataArr[1]: =====", dataArr[1]);
                 
                 // ************************************************************************ //
                 // Spotiy again                                                             //
                 // ************************************************************************ //
-                SpotifyThisSong();
+                // SpotifyThisSong(dataArr[1]);
                 // var spotify = new Spotify(keys.spotify);
                 // spotify.search({ type: 'track', query: dataArr[1] })
                 //     .then(function(response) {
@@ -294,5 +330,5 @@ if (!(liriCommand == null)) {
         default:
             console.log(" You hit the default. Try Again");
             break;
+        }
     }
-}
