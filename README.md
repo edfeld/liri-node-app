@@ -63,8 +63,10 @@ LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and R
     * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
 
 5. do-what-it-says
-  When a user calls the liri.js program in node with the parameter, "do-what-it-says", the program run the Spotify lookup with the song named, "I Want it That Way".  This branch uses the `fs` node package to read a separate file called random.txt and use the text in that file to run the Spotify lookup.
+  When a user calls the liri.js program in node with the parameter, "do-what-it-says", the program reads the random.text file which contains multiple lines of data.  Each line contains a command equal to one of the commands required for the liri bot and secondly, a parameter to be passed with the command.  (e.g.:  `movie-this,Reds`)  The liri bot program takes these text elements, loads them into arrays and loops through the commands to producing the desired output for each command and parameter.  This is shown on the second demonstration video.  
 
-Here is the link to my demonstration video:
+Here are the links to my demonstration video:
 
 ```https://drive.google.com/file/d/14SyWYbQsCtQhlzna7IjofDb9RDtAX1tN/view```
+
+```https://drive.google.com/file/d/1LAXJWNIlLsyEV0pEx7_LsoEJz-Zt5W2w/view```
