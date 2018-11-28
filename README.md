@@ -26,8 +26,8 @@ LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and R
 
     If the user does not enter a band name, liri will default to the band, U2.
 
-3. Spotify-this-song -
-  When a user calls the liri.js program in node with the parameters, "Spotify-this-song" and the song name, the liri bot will produce a list of songs that match the search and with the following data items:
+3. spotify-this-song -
+  When a user calls the liri.js program in node with the parameters, "spotify-this-song" and the song name, the liri bot will produce a list of songs that match the search and with the following data items:
 
      * `Artist(s)`
 
@@ -65,7 +65,27 @@ LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and R
 5. do-what-it-says -
   When a user calls the liri.js program in node with the parameter, "do-what-it-says", the program reads the random.text file which contains multiple lines of data.  Each line contains a command equal to one of the commands required for the liri bot and secondly, a parameter to be passed with the command.  (e.g.:  `movie-this,Reds`)  The liri bot program takes these text elements, loads them into arrays and loops through the commands to producing the desired output for each command and parameter.  This is shown on the second demonstration video.  
 
-Here are the links to my demonstration video:
+6. How to set up the application:
+  a. Copy the repository to your local directory.
+  b. Run npm install
+  c. you must create a .env file and get api keys for bandsInTown, Spotify and IMDB.  Set up the .env file to look like this:
+
+  ``` 
+# Spotify API keys
+
+SPOTIFY_ID=xxxxxxxxxxxxx
+SPOTIFY_SECRET=xxxxxxxxxxxx
+
+BANDSINTOWN_SECRET=xxxxxxxxxxxxx
+
+OMDB_SECRET=xxxxxxx```
+
+9. Run the file by call it with node:
+node liri.js spotify-this-song "Rosanna"
+node liri.js concert-this "Weezer"
+node liri.js movie-this "Rocky"
+
+10. Here are the links to my demonstration video:
 
 ```https://drive.google.com/file/d/14SyWYbQsCtQhlzna7IjofDb9RDtAX1tN/view```
 

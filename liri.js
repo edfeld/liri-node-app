@@ -214,8 +214,9 @@ function movieThis(searchStr) {
 }
 
 console.log("47 liricommand: ", liriCommand);
+console.log("liriCommand.toLowerCase: ", liriCommand.toLowerCase());
 if (!(liriCommand == null)) {
-    switch (liriCommand) {
+    switch (liriCommand.toLowerCase()) {
         // =======================================================
         //          concert-this
         // =======================================================
