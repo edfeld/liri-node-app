@@ -15,7 +15,7 @@ LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and R
 
    * `do-what-it-says`
 
-2. Concert-this -
+2. concert-this -
   When a user calls the liri.js file in node with the parameters, "concert-this" and a band name, the liri bot will produce a list of future concerts with the following data items:
   
     *`Venue name`
