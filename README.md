@@ -67,7 +67,7 @@ LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and R
 
 6. How to set up the application:
   a. Copy the repository to your local directory.
-  b. Run npm install
+  b. Run npm install on the command line in terminal
   c. you must create a .env file and get api keys for bandsInTown, Spotify and IMDB.  Set up the .env file to look like this:
 
   ``` 
@@ -80,13 +80,16 @@ BANDSINTOWN_SECRET=xxxxxxxxxxxxx
 
 OMDB_SECRET=xxxxxxx```
 
+This .env file should be in the root directory.
+
 9. Run the file by call it with node:
 node liri.js spotify-this-song "Rosanna"
 node liri.js concert-this "Weezer"
 node liri.js movie-this "Rocky"
+node liri.js do-what-it-says
 
 10. Here are the links to my demonstration video:
 
-```https://drive.google.com/file/d/14SyWYbQsCtQhlzna7IjofDb9RDtAX1tN/view```
+  https://drive.google.com/file/d/14SyWYbQsCtQhlzna7IjofDb9RDtAX1tN/view
 
-```https://drive.google.com/file/d/1LAXJWNIlLsyEV0pEx7_LsoEJz-Zt5W2w/view```
+  https://drive.google.com/file/d/1LAXJWNIlLsyEV0pEx7_LsoEJz-Zt5W2w/view
