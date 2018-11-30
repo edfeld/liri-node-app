@@ -70,19 +70,19 @@ LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and R
   b. Run npm install on the command line in terminal
   c. you must create a .env file and get api keys for bandsInTown, Spotify and IMDB.  Set up the .env file to look like this:
 
-  ``` 
-# Spotify API keys
+`# Spotify API keys
 
 SPOTIFY_ID=xxxxxxxxxxxxx
 SPOTIFY_SECRET=xxxxxxxxxxxx
 
 BANDSINTOWN_SECRET=xxxxxxxxxxxxx
 
-OMDB_SECRET=xxxxxxx ```
+OMDB_SECRET=xxxxxxx `
 
 This .env file should be in the root directory.
 
 9. Run the file by call it with node:
+
 node liri.js spotify-this-song "Rosanna"
 node liri.js concert-this "Weezer"
 node liri.js movie-this "Rocky"
