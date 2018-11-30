@@ -78,7 +78,7 @@ SPOTIFY_SECRET=xxxxxxxxxxxx
 
 BANDSINTOWN_SECRET=xxxxxxxxxxxxx
 
-OMDB_SECRET=xxxxxxx```
+OMDB_SECRET=xxxxxxx ```
 
 This .env file should be in the root directory.
 
