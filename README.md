@@ -1,19 +1,33 @@
 
 # liri-node-app
 
-Use Node with API packages.
+## Use Node with API packages
+
+Technologies:
+
+- Node.js
+
+- "Require" npm package
+
+- dotenv npm package
+
+- node-spotify-api package
+
+- request npm package
+
+- moments npm package
 
 LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and Recognition Interface, LIRI is a _Language_ Interpretation and Recognition Interface. LIRI is a command line node app that takes in parameters and gives you back data.
 
 1. liri.js can accepts one of the following commands:
 
-   * `concert-this`
+- `concert-this`
 
-   * `spotify-this-song`
+- `spotify-this-song`
 
-   * `movie-this`
+- `movie-this`
 
-   * `do-what-it-says`
+- `do-what-it-says`
 
 2. concert-this:
   When a user calls the liri.js file in node with the parameters, "concert-this" and a band name, the liri bot will produce a list of future concerts with the following data items:
@@ -68,7 +82,7 @@ LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and R
 6. How to set up the application:
     1. Copy the repository to your local directory.
     2. Run npm install on the command line in terminal.
-    3. You must create a .env file and get api keys for bandsInTown, Spotify and IMDB.  Set up the .env file to look like this:
+    3. You must create a .env file and get api keys for bandsInTown, Spotify and IMDB.  Put the .env file in the root directory of the application.  Set up the .env file to look like this:
 
   `# Spotify API keys
 
@@ -79,14 +93,12 @@ LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and R
 
   OMDB_SECRET=xxxxxxx `
 
-  This .env file should be in the root directory.
-
 7. Run the file by call it with node:
 
-node liri.js spotify-this-song "Rosanna"
-node liri.js concert-this "Weezer"
-node liri.js movie-this "Rocky"
-node liri.js do-what-it-says
+- `node liri.js spotify-this-song "Rosanna"`
+- `node liri.js concert-this "Weezer`
+- `node liri.js movie-this "Rocky"`
+- `node liri.js do-what-it-says`
 
 8. Here are the links to my demonstration video:
 
